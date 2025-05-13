@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: doctorai-news
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: doctorai-news
+  template:
+    metadata:
+      labels:
+        app: doctorai-news
+    spec:
+      containers:
+        - name: doctorai-news
+          image: ellieene/doctorai-news:latest
+          ports:
+            - containerPort: 8000
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://postgres-news:5432/postgres
+            - name: SPRING_DATASOURCE_USERNAME
+              value: ellieene
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: ellieene
+            - name: SPRING_KAFKA_BOOTSTRAP_SERVERS
+              value: kafka:9092
